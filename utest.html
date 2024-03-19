@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Test Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>User Test Scores</h1>
+    <div id="username-info"></div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Score</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="result-table-body">
+            <!-- Scores will be dynamically populated here -->
+        </tbody>
+    </table>
+    <button id="clear-btn">Clear Scores</button>
+
+    <script src="script.js"></script>
+    <script>
+        // Retrieve and display user scores
+        document.addEventListener('DOMContentLoaded', function() {
+            var username = localStorage.getItem('username');
+            if (username) {
+                document.getElementById('username-info').textContent = 'Logged in as: ' + username;
+            } else {
+                document.getElementById('username-info').textContent = 'Username not found';
+            }
+            
+            var userScores = JSON.parse(localStorage.getItem('userScores')) || [];
+            var tableBody = document.getElementById('result-table-body');
+            userScores.forEach(function(score, index) {
+                var newRow = tableBody.insertRow();
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+                cell1.textContent = username || 'Unknown'; // Display username or 'Unknown' if not available
+                cell2.textContent = score;
+                // Add delete button with event listener to delete row
+                var deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener('click', function() {
+                    tableBody.deleteRow(index); // Delete the row from the table
+                    userScores.splice(index, 1); // Remove the score from the array
+                    localStorage.setItem('userScores', JSON.stringify(userScores)); // Update localStorage
+                });
+                cell3.appendChild(deleteButton);
+            });
+        });
+
+        // Clear all scores when the clear button is clicked
+        document.getElementById('clear-btn').addEventListener('click', function() {
+            localStorage.removeItem('userScores');
+            location.reload(); // Refresh the page to clear the table
+        });
+    </script>
+    <style>
+        body {
+            color: blue;
+            background-color: rgb(255, 255, 255);
+        }
+    </style>
+</body>
+<div><!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Page</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <h1>Admin Page</h1>
+        <h2>Create Table</h2>
+        <form id="create-table-form">
+            <label for="rows">Number of Rows:</label>
+            <input type="number" id="rows" name="rows" min="1" required>
+            <label for="columns">Number of Columns:</label>
+            <input type="number" id="columns" name="columns" min="1" required>
+            <button type="button" id="create-table-btn">Create Table</button>
+        </form>
+        <div id="table-container"></div>
+        <button type="button" id="post-table-btn">Post Table</button>
+    
+        <script src="script.js"></script>
+        <script>
+            document.getElementById('create-table-btn').addEventListener('click', function() {
+                var rows = parseInt(document.getElementById('rows').value);
+                var columns = parseInt(document.getElementById('columns').value);
+                var tableHtml = '<table border="1">';
+                for (var i = 0; i < rows; i++) {
+                    tableHtml += '<tr>';
+                    for (var j = 0; j < columns; j++) {
+                        tableHtml += '<td contenteditable="true"></td>';
+                    }
+                    tableHtml += '</tr>';
+                }
+                tableHtml += '</table>';
+                document.getElementById('table-container').innerHTML = tableHtml;
+            });
+    
+            // Function to post the table to index.html
+            document.getElementById('post-table-btn').addEventListener('click', function() {
+                var tableHtml = document.getElementById('table-container').innerHTML;
+                localStorage.setItem('postedTableHtml', tableHtml);
+                alert('Table posted successfully to index.html');
+            });
+        </script>
+    </body>
+    </html>
+    </div>
+
+
+</html>

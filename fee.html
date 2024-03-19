@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head></head>
+<head>
+    <style>
+        /* Base styles for the button */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Primary button style */
+.primary-button {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* Secondary button style */
+.secondary-button {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+/* Danger button style */
+.danger-button {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+/* Hover effects */
+.button:hover {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+    </style>
+    <style>
+        body {
+            background-color: darkred;
+            color: aliceblue;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <h2>User Status</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="userStatusTableBody"></tbody>
+    </table>
+
+    <script>
+        function displayUserStatus() {
+            const userStatusTableBody = document.getElementById('userStatusTableBody');
+            const userStatusList = JSON.parse(localStorage.getItem('userStatusList')) || [];
+            userStatusTableBody.innerHTML = ''; // Clear existing content
+
+            userStatusList.forEach(function(userStatus) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${userStatus.username}</td>
+                    <td>${userStatus.status}</td>
+                `;
+                userStatusTableBody.appendChild(row);
+            });
+        }
+
+        window.addEventListener('storage', displayUserStatus); // Update the displayed user status when changes are made in localStorage
+        displayUserStatus(); // Initially display user status
+
+        // Other script code...
+    </script>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Logins</title>
+</head>
+<body>
+    <h2>User Logins</h2>
+    <ul id="userLogins"></ul>
+
+    <script>
+        function displayUserLogins() {
+            const userLoginsElement = document.getElementById('userLogins');
+            userLoginsElement.innerHTML = ''; // Clear previous entries
+            const userLogins = JSON.parse(localStorage.getItem('userLogins')) || [];
+            userLogins.forEach(function(login) {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Username: ${login.username}, Status: ${login.status}, Date: ${login.loginDate}`;
+                userLoginsElement.appendChild(listItem);
+            });
+        }
+
+        window.addEventListener('storage', displayUserLogins);
+        displayUserLogins(); // Initially display user logins
+    </script>
+</body>
+<p><!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fee</title>
+    </head>
+    <body>
+        <h2>Submit Content</h2>
+        <form id="contentForm">
+            <label for="textContent">Enter Text:</label><br>
+            <textarea id="textContent" name="textContent" rows="4" cols="50"></textarea><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    
+        <div id="adminTools" style="display: none;">
+            <button onclick="editContent()"class="primary button">Edit</button>
+            <button onclick="deleteContent()"class="primary button">Delete</button>
+        </div>
+    
+        <div id="contentDisplay"></div>
+    
+        <script>
+            function updateContentDisplay() {
+                const contentDisplay = document.getElementById('contentDisplay');
+                const submittedContent = localStorage.getItem('submittedContent') || 'No content submitted yet.';
+                contentDisplay.innerHTML = submittedContent;
+            }
+    
+            function showAdminTools() {
+                document.getElementById('adminTools').style.display = 'block';
+            }
+    
+            function editContent() {
+                const content = prompt('Enter new content:');
+                if (content !== null) {
+                    localStorage.setItem('submittedContent', content);
+                    updateContentDisplay();
+                    alert('Content updated successfully!');
+                }
+            }
+    
+            function deleteContent() {
+                localStorage.removeItem('submittedContent');
+                updateContentDisplay();
+                alert('Content deleted successfully!');
+            }
+    
+            window.onload = function() {
+                const isAdmin = localStorage.getItem('isAdmin');
+                if (isAdmin === 'true') {
+                    showAdminTools();
+                }
+                updateContentDisplay();
+            };
+    
+            document.getElementById('contentForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const textContent = document.getElementById('textContent').value;
+                localStorage.setItem('submittedContent', textContent);
+                updateContentDisplay();
+                alert('Content submitted successfully!');
+                document.getElementById('textContent').value = ''; // Clear the textarea after submission
+            });
+        </script>
+    </body>
+    </html>
+    </p>
+    
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+<body>
+    
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <button onclick="blockUser()"class="primary button">Block User</button>
+    <button onclick="unblockUser()"class="primary button">Unblock User</button>
+
+    <script>
+        function blockUser() {
+            localStorage.setItem('isBlocked', true);
+            alert('User blocked successfully.');
+        }
+
+        function unblockUser() {
+            localStorage.removeItem('isBlocked');
+            alert('User unblocked successfully.');
+        }
+    </script>
+</body>
+</html>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+<body>
+    
+    <h2>Submit Picture</h2>
+    <form id="pictureForm">
+        <input type="file" id="pictureInput" accept="image/*">
+        <button type="submit"class="primary button">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('pictureForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const pictureInput = document.getElementById('pictureInput');
+            const pictureFile = pictureInput.files[0];
+            if (pictureFile) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const pictureData = event.target.result;
+                    const pictures = JSON.parse(localStorage.getItem('pictures')) || [];
+                    pictures.push(pictureData);
+                    localStorage.setItem('pictures', JSON.stringify(pictures));
+                    alert('Picture submitted successfully!');
+                    pictureInput.value = ''; // Clear input field
+                }
+                reader.readAsDataURL(pictureFile);
+            } else {
+                alert('Please select a picture to submit.');
+            }
+        });
+    </script>
+    <p> <button onclick="goToPage()"class="primary button">profile</button>
+
+        <script>
+            function goToPage() {
+                // Replace 'target-page.html' with the URL of the page you want to navigate to
+                window.location.href = 'profileadmin.html';
+            }
+        </script></p>
+</body>
+<div><p> <button onclick="goToPage()" class="primary button">view test results</button>
+
+    <script>
+        function goToPage() {
+            // Replace 'target-page.html' with the URL of the page you want to navigate to
+            window.location.href = 'utest.html';
+        }
+    </script></p></div>
+</html>
+
+</body>
+</html>
+
+
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            background-color: darkred;
+            color: aliceblue;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Menu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-end; /* Align sidebar to the right */
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 200px;
+            height: 100%;
+            background-color: #333;
+            overflow-x: hidden;
+            padding-top: 20px;
+            color: #fff;
+        }
+        .sidebar img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            cursor: pointer;
+        }
+        .sidebar p {
+            text-align: center;
+        }
+        .sidebar input[type="text"] {
+            width: 80%;
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <img id="profilePic" src="profile-placeholder.jpg" alt="Profile Picture" onclick="selectProfilePic()">
+        <input type="file" id="fileInput" style="display: none;" accept="image/*">
+        <label for="fileInput" style="cursor: pointer;">Change Picture</label>
+        <input type="text" id="usernameInput" placeholder="Enter Name">
+    </div>
+
+    <script>
+        // Function to select profile picture
+        function selectProfilePic() {
+            document.getElementById('fileInput').click();
+        }
+
+        // Function to handle file input change
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profilePic').src = e.target.result;
+                    localStorage.setItem('profilePic', e.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Function to handle username input change
+        document.getElementById('usernameInput').addEventListener('input', function(event) {
+            const username = event.target.value;
+            localStorage.setItem('username', username);
+        });
+
+        // Load saved profile picture and username from localStorage
+        window.onload = function() {
+            const savedProfilePic = localStorage.getItem('profilePic');
+            if (savedProfilePic) {
+                document.getElementById('profilePic').src = savedProfilePic;
+            }
+
+            const savedUsername = localStorage.getItem('username');
+            if (savedUsername) {
+                document.getElementById('usernameInput').value = savedUsername;
+            }
+        };
+    </script>
+</body>
+<h3></h3>
+</html>

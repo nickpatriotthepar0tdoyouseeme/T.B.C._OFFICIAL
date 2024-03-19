@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Menu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 200px;
+            height: 100%;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+            color: #fff;
+        }
+        .sidebar img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            cursor: pointer;
+        }
+        .sidebar p {
+            text-align: center;
+        }
+        .sidebar input[type="text"] {
+            width: 80%;
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <img id="profilePic" src="profile-placeholder.jpg" alt="Profile Picture" onclick="selectProfilePic()">
+        <input type="file" id="fileInput" style="display: none;" accept="image/*">
+        <label for="fileInput" style="cursor: pointer;">Change Picture</label>
+        <input type="text" id="usernameInput" placeholder="Enter Name">
+    </div>
+
+    <script>
+        // Function to select profile picture
+        function selectProfilePic() {
+            document.getElementById('fileInput').click();
+        }
+
+        // Function to handle file input change
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profilePic').src = e.target.result;
+                    localStorage.setItem('profilePic', e.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Function to handle username input change
+        document.getElementById('usernameInput').addEventListener('input', function(event) {
+            const username = event.target.value;
+            localStorage.setItem('username', username);
+        });
+
+        // Load saved profile picture and username from localStorage
+        window.onload = function() {
+            const savedProfilePic = localStorage.getItem('profilePic');
+            if (savedProfilePic) {
+                document.getElementById('profilePic').src = savedProfilePic;
+            }
+
+            const savedUsername = localStorage.getItem('username');
+            if (savedUsername) {
+                document.getElementById('usernameInput').value = savedUsername;
+            }
+        };
+    </script>
+</body>
+<h3>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock Widget</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .clock {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 10px solid #333;
+            background-color: #fff;
+        }
+
+        .hour,
+        .minute,
+        .second {
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background-color: #333;
+            top: 50%;
+            transform-origin: 100% 50%;
+        }
+
+        .hour {
+            background-color: #000;
+            transform: rotate(90deg);
+        }
+
+        .minute {
+            background-color: #333;
+            transform: rotate(180deg);
+        }
+
+        .second {
+            background-color: red;
+            transform: rotate(270deg);
+        }
+
+        .center-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #000;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="hour" id="hour"></div>
+        <div class="minute" id="minute"></div>
+        <div class="second" id="second"></div>
+        <div class="center-dot"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const second = now.getSeconds();
+
+            const hourHand = document.getElementById('hour');
+            const minuteHand = document.getElementById('minute');
+            const secondHand = document.getElementById('second');
+
+            const hourDegrees = (hour * 30) + (0.5 * minute); // Each hour is 30 degrees
+            const minuteDegrees = (minute * 6) + (0.1 * second); // Each minute is 6 degrees
+            const secondDegrees = second * 6; // Each second is 6 degrees
+
+            hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+            minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
+            secondHand.style.transform = `rotate(${secondDegrees}deg)`;
+        }
+
+        setInterval(updateClock, 1000); // Update every second
+        updateClock(); // Initial update
+    </script>
+</body>
+</html>
+
+</h3>
+</html>

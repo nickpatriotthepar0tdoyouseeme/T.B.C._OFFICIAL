@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+</head>
+<body>
+    <h2>User Login</h2>
+    <form id="userLoginForm">
+        <label for="userUsername">Username:</label><br>
+        <input type="text" id="userUsername" name="userUsername"><br>
+        <label for="userPassword">Password:</label><br>
+        <input type="password" id="userPassword" name="userPassword"><br><br>
+        <input type="submit" value="Login">
+    </form>
+
+    <h2>Admin Login</h2>
+    <form id="adminLoginForm">
+        <label for="adminUsername">Username:</label><br>
+        <input type="text" id="adminUsername" name="adminUsername"><br>
+        <label for="adminPassword">Password:</label><br>
+        <input type="password" id="adminPassword" name="adminPassword"><br><br>
+        <input type="submit" value="Login">
+    </form>
+
+    <h2>Status</h2>
+    <p id="status">Offline</p>
+
+    <script>
+        function updateStatus() {
+            const statusElement = document.getElementById('status');
+            let status = '';
+            if (navigator.onLine) {
+                status = 'Online';
+            } else {
+                status = 'Offline';
+            }
+            localStorage.setItem('status', status); // Store the online/offline status
+            statusElement.textContent = status; // Update the status display
+        }
+
+        window.addEventListener('online', updateStatus);
+        window.addEventListener('offline', updateStatus);
+        updateStatus();
+
+        document.getElementById('userLoginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('userUsername').value;
+            const password = document.getElementById('userPassword').value;
+
+            if (password === '3254') {
+                let userLogins = JSON.parse(localStorage.getItem('userLogins')) || [];
+                const loginDate = new Date();
+                userLogins.push({ username: username, status: localStorage.getItem('status'), loginDate: loginDate });
+                localStorage.setItem('userLogins', JSON.stringify(userLogins));
+
+                localStorage.setItem('isAdmin', 'false');
+                localStorage.setItem('username', username);
+                localStorage.setItem('loginDate', loginDate);
+                window.location.href = 'index.html';
+            } else {
+                alert('Invalid username or password for user!');
+            }
+        });
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+
+            if (username === 'nick' && password === '5678') {
+                let adminLogins = JSON.parse(localStorage.getItem('adminLogins')) || [];
+                const loginDate = new Date();
+                adminLogins.push({ username: username, status: localStorage.getItem('status'), loginDate: loginDate });
+                localStorage.setItem('adminLogins', JSON.stringify(adminLogins));
+
+                localStorage.setItem('isAdmin', 'true');
+                localStorage.setItem('username', username);
+                localStorage.setItem('loginDate', loginDate);
+                window.location.href = 'fee.html';
+            } else {
+                alert('Invalid username or password for admin!');
+            }
+        });
+    </script>
+</body>
+</html>

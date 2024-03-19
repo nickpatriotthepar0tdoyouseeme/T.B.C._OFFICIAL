@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Test Page</h1>
+    <div id="test-container">
+        <!-- Questions and options will be dynamically generated here -->
+    </div>
+    <button id="submit-btn">Submit Test</button>
+    <div id="timer">Time Remaining: <span id="time">10:00</span></div>
+
+    <script src="script.js"></script>
+</body>
+<script>// Sample questions and options
+    var questions = [
+        {
+            question: "1-what use of blackstone is used more in TBC?",
+            options: ["Option A:destruction", "Option B:mining", "Option C:gemstone", "Option D:none"],
+            answer: 1 // Index of correct option (0 for Option A, 1 for Option B, etc.)
+        },
+        {
+            question: "2-who is curruntely the hive colonel??",
+            options: ["Option A:jimmy jhonson", "Option B:victor", "Option C:nick", "Option D:TBC Council members "],
+            answer: 1
+        },
+        {
+            question: "3-why is the break of bound strategic for TBC?",
+            options: ["Option A:destruction", "Option B:mining", "Option C:special forces", "Option D:all options"],
+            answer: 3 // Index of correct option (0 for Option A, 1 for Option B, etc.)
+        },
+        {
+            question: "4-what does this mean in comedictional coding (31A9 osmosr5A cARno4nel) ?",
+            options: ["Option A:colonel is dead", "Option B:mission is successful", "Option C:return to headquarters", "Option D:seek mercy"],
+            answer: 1 // Index of correct option (0 for Option A, 1 for Option B, etc.)
+        },
+        {
+            question: "5-why is DPG Regainig forces in grainsgrow?",
+            options: ["Option A:govermental hooking", "Option B:missle crisis", "Option C:restriction for TBC", "Option D:none"],
+            answer: 3 // Index of correct option (0 for Option A, 1 for Option B, etc.)
+        },
+        {
+            question: "6-what is the best use of knives in war and survival situations?",
+            options: ["Option A:making heat", "Option B:defense", "Option C:affense", "Option D:options A , B"],
+            answer: 4 // Index of correct option (0 for Option A, 1 for Option B, etc.)
+        },
+        {
+            question: "7-which year did TBC conquer the sight block?",
+            options: ["Option A:1999", "Option B:2003", "Option C:2015", "Option D:2020"],
+            answer: 3 // Index of correct option (0 for Option A, 1 for Option B, etc.)
+        },
+        {
+            question: "8-what was the hive called when grainsgrows deployment rowndabout was destroyed?",
+            options: ["Option A:national defense organization", "Option B:military orginazation", "Option C:spy organization", "Option D:none"],
+            answer: 1 // Index of correct option (0 for Option A, 1 for Option B, etc.)
+        },
+        {
+            question: "9-which organ is more vital for TBC?",
+            options: ["Option A:the HIVE", "Option B:national health org", "Option C:national price org", "Option D:goverment/Council"],
+            answer: 2 // Index of correct option (0 for Option A, 1 for Option B, etc.)
+        },{
+            question: "10-what was the first currency in TBC?",
+            options: ["Option A:Riods", "Option B:owls", "Option C:crows", "Option D:seedling"],
+            answer: 2 // Index of correct option (0 for Option A, 1 for Option B, etc.)
+        },
+        // Add more questions here
+    ];
+    
+    // Function to render questions and options
+    function renderQuestions() {
+        var testContainer = document.getElementById('test-container');
+        questions.forEach(function (q, index) {
+            var questionDiv = document.createElement('div');
+            questionDiv.innerHTML = "<h3>" + q.question + "</h3>";
+            q.options.forEach(function (opt, optIndex) {
+                var option = document.createElement('input');
+                option.type = 'radio';
+                option.name = 'question' + index;
+                option.value = optIndex;
+                questionDiv.appendChild(option);
+                questionDiv.appendChild(document.createTextNode(opt));
+                questionDiv.appendChild(document.createElement('br'));
+            });
+            testContainer.appendChild(questionDiv);
+        });
+    }
+    
+    // Timer functionality
+    var timeLeft = 600; // 10 minutes in seconds
+    
+    function countdown() {
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft % 60;
+        document.getElementById('time').innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        if (timeLeft === 0) {
+            alert("Time's up!");
+            clearInterval(timer);
+            submitTest();
+        } else {
+            timeLeft--;
+        }
+    }
+    
+    var timer = setInterval(countdown, 1000);
+    
+    // Function to handle form submission
+    function submitTest() {
+        // Process user's answers
+        var userAnswers = [];
+        questions.forEach(function (q, index) {
+            var selectedOption = document.querySelector('input[name="question' + index + '"]:checked');
+            if (selectedOption) {
+                userAnswers.push(parseInt(selectedOption.value));
+            } else {
+                userAnswers.push(-1); // User did not select an option
+            }
+        });
+        // Calculate score
+        var score = calculateScore(userAnswers);
+        alert('Your score is: ' + score);
+    }
+    
+    // Function to calculate the score
+    function calculateScore(userAnswers) {
+        var score = 0;
+        userAnswers.forEach(function (answer, index) {
+            if (answer === questions[index].answer) {
+                score++;
+            }
+        });
+        return score;
+    }
+    
+    // Render questions when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        renderQuestions();
+    });
+    
+    // Submit test when the button is clicked
+    document.getElementById('submit-btn').addEventListener('click', function() {
+        submitTest();
+    });
+    </script>
+    <script>// Function to handle form submission
+        function submitTest() {
+            // Process user's answers
+            var userAnswers = [];
+            questions.forEach(function (q, index) {
+                var selectedOption = document.querySelector('input[name="question' + index + '"]:checked');
+                if (selectedOption) {
+                    userAnswers.push(parseInt(selectedOption.value));
+                } else {
+                    userAnswers.push(-1); // User did not select an option
+                }
+            });
+            // Calculate score
+            var score = calculateScore(userAnswers);
+            alert('Your score is: ' + score);
+            
+            // Store the user's score in localStorage
+            var userScores = JSON.parse(localStorage.getItem('userScores')) || [];
+            userScores.push(score);
+            localStorage.setItem('userScores', JSON.stringify(userScores));
+        }
+        
+        // Function to calculate the score
+        function calculateScore(userAnswers) {
+            var score = 0;
+            userAnswers.forEach(function (answer, index) {
+                if (answer === questions[index].answer) {
+                    score++;
+                }
+            });
+            return score;
+        }
+        // Function to handle form submission
+function submitTest() {
+    // Process user's answers
+    var userAnswers = [];
+    questions.forEach(function (q, index) {
+        var selectedOption = document.querySelector('input[name="question' + index + '"]:checked');
+        if (selectedOption) {
+            userAnswers.push(parseInt(selectedOption.value));
+        } else {
+            userAnswers.push(-1); // User did not select an option
+        }
+    });
+    console.log("User's answers:", userAnswers); // Log user's answers
+    // Calculate score
+    var score = calculateScore(userAnswers);
+    alert('Your score is: ' + score);
+    
+    // Store the user's score in localStorage
+    var userScores = JSON.parse(localStorage.getItem('userScores')) || [];
+    userScores.push(score);
+    localStorage.setItem('userScores', JSON.stringify(userScores));
+}
+// Function to calculate the score
+function calculateScore(userAnswers) {
+    var score = 0;
+    userAnswers.forEach(function (answer, index) {
+        console.log("Correct answer for question " + (index + 1) + ":", questions[index].answer);
+        if (answer === questions[index].answer) {
+            score++;
+        }
+    });
+    return score;
+}
+
+        </script>
+        <style>
+          body  {
+            color: rgb(0, 255, 0);
+            background-color: rgb(113, 5, 84);
+            }
+        </style>
+</html>

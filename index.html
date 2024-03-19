@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* Base styles for the button */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Primary button style */
+.primary-button {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* Secondary button style */
+.secondary-button {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+/* Danger button style */
+.danger-button {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+/* Hover effects */
+.button:hover {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+    </style>
+    <header><!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Moving Text with Picture and Random Quotes</title>
+            <style>
+                body {
+                    background-image: url('hi.jpg'); /* Replace 'background-image.jpg' with your image URL */
+                    background-size: cover;
+                    color: rgba(255, 255, 255, 0); /* Default text color */
+                    font-family: Arial, sans-serif; /* Specify a font */
+                    margin: 0; /* Remove default margin */
+                    padding: 0; /* Remove default padding */
+                    position: relative; /* Make body a positioning context */
+                }
+        
+                /* Styling for the moving text */
+                .moving-text-container {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    white-space: nowrap; /* Prevent text from wrapping */
+                    overflow: hidden; /* Hide overflowing content */
+                    color: rgb(255, 255, 255); /* Blue text color */
+                    background-color: rgba(0, 0, 0, 0.5); /* Red background color with transparency */
+                    padding: 10px;
+                    animation: moveText 10s linear infinite; /* Adjust animation duration as needed */
+                }
+        
+                /* Keyframes for the animation */
+                @keyframes moveText {
+                    0% { transform: translate(-100%, -50%); }
+                    100% { transform: translate(100%, -50%); } /* Move text from left to right */
+                }
+        
+                /* Styling for the image */
+                .header-image {
+                    width: 100%;
+                    height: auto;
+                }
+            </style>
+        </head>
+        <body>
+            <!-- Image on top -->
+            <img class="header-image" src="your-image.jpg" alt="Header Image">
+        
+            <!-- Moving text with quotes -->
+            <div class="moving-text-container">
+                "The only way to do great work is to love what you do." - Steve Jobs
+            </div>
+        
+            <!-- Content goes here -->
+        
+            <!-- JavaScript for changing quotes -->
+            <script>
+                // Array of random quotes
+                var quotes = [
+                    "In the end, it's not the years in your life that count. It's the life in your years. - Abraham Lincoln",
+                    "Life is what happens when you're busy making other plans. - John Lennon",
+                    "Believe you can and you're halfway there. - Theodore Roosevelt",
+                    "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
+                    "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
+                    "You miss 100% of the shots you don't take. - Wayne Gretzky"
+                ];
+        
+                // Function to display a random quote
+                function displayRandomQuote() {
+                    var randomIndex = Math.floor(Math.random() * quotes.length);
+                    var movingText = document.querySelector('.moving-text-container');
+                    movingText.textContent = quotes[randomIndex];
+                }
+        
+                // Display initial quote
+                displayRandomQuote();
+        
+                // Update quote every 10 seconds
+                setInterval(displayRandomQuote, 10000);
+            </script>
+        </body>
+        </html>
+        </header>
+    <style>
+        body {
+            background-color: rgb(0, 26, 255);
+            color: aliceblue;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>user dashboard</title>
+</head>
+<body>
+    <h2>latest news</h2>
+    <div id="content"></div>
+
+    <script>
+        function updateContent() {
+            const contentElement = document.getElementById('content');
+            const submittedContent = localStorage.getItem('submittedContent') || 'No content submitted yet.';
+            contentElement.textContent = submittedContent;
+        }
+
+        window.addEventListener('storage', updateContent);
+        updateContent(); // Initially update the content
+    </script>
+</body>
+<body>
+    <button class="secondary-button" goToPage()" >profile</button>
+
+    <script>
+        function goToPage() {
+            // Replace 'target-page.html' with the URL of the page you want to navigate to
+            window.location.href = 'profile.html';
+        }
+    </script>
+</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+
+    <script>
+        window.onload = function() {
+            const isBlocked = localStorage.getItem('isBlocked');
+            if (isBlocked) {
+                alert('Access to the website is blocked.');
+                window.location.href = 'blocked.html'; // Redirect to a blocked page
+            }
+        };
+    </script>
+</body>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+    <h2>Submitted Pictures</h2>
+    <div id="pictureContainer"></div>
+
+    <script>
+        window.onload = function() {
+            const pictures = JSON.parse(localStorage.getItem('pictures')) || [];
+            const pictureContainer = document.getElementById('pictureContainer');
+            pictures.forEach(function(pictureData) {
+                const img = document.createElement('img');
+                img.src = pictureData;
+                img.style.width = '200px'; // Adjust image size as needed
+                img.style.marginRight = '10px'; // Adjust margin as needed
+                pictureContainer.appendChild(img);
+            });
+        };
+    </script>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    
+
+    <script>
+        window.onload = function() {
+            const isBlocked = localStorage.getItem('isBlocked');
+            if (isBlocked) {
+                alert('Access to the website is blocked.');
+                window.location.href = 'blocked.html'; // Redirect to a blocked page
+            }
+        };
+    </script>
+</body>
+<div>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button to Another Page</title>
+</head>
+<body>
+
+    <a href="me.html" class="Danger-button"><button>give entry test</button></a>
+</body>
+</html>
+
+</div>
+</html>
+
+</body>
+</html>
+
+</body>
+</html>
+
+
+</html>
